@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Weather Info App',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: WeatherHomePage(),
+      home: WeatherHomePage(), // Public WeatherHomePage widget
     );
   }
 }
@@ -25,7 +25,6 @@ class WeatherHomePage extends StatefulWidget {
 }
 
 class _WeatherHomePageState extends State<WeatherHomePage> {
-  // TextEditingController and other variables should be here
   final TextEditingController _cityController = TextEditingController();
   String cityName = '';
   String temperature = '';
@@ -48,15 +47,27 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
             // Button to fetch weather
             ElevatedButton(
               onPressed: () {
-                // Simulate fetching weather data when button is pressed
                 setState(() {
                   cityName = _cityController.text;
+
+                  // Handle empty input
+                  if (cityName.isEmpty) {
+                    cityName = 'No city entered';
+                    temperature = '';
+                    weatherCondition = '';
+                    return;
+                  }
+
+                  // Simulate fetching weather data
                   temperature =
                       '${(15 + (30 - 15) * (DateTime.now().microsecondsSinceEpoch % 100) / 100).toStringAsFixed(0)}°C'; // Simulated temp
                   weatherCondition = ['Sunny', 'Cloudy', 'Rainy'][
                       (DateTime.now().microsecondsSinceEpoch % 3)
                           .toInt()]; // Simulated condition
                 });
+
+                // Clear the input field after fetching
+                _cityController.clear();
               },
               child: Text('Fetch Weather'),
             ),
