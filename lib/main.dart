@@ -25,11 +25,16 @@ class WeatherHomePage extends StatefulWidget {
 }
 
 class _WeatherHomePageState extends State<WeatherHomePage> {
-  // TextEditingController and other variables should be here
+  // TextEditingController and other variables
   final TextEditingController _cityController = TextEditingController();
   String cityName = '';
   String temperature = '';
   String weatherCondition = '';
+
+  // New variables for the 7-day forecast
+  List<String> forecastDays = [];
+  List<String> forecastTemps = [];
+  List<String> forecastConditions = [];
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +50,13 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
               controller: _cityController,
               decoration: InputDecoration(hintText: 'Enter city name'),
             ),
-            // Button to fetch weather
+            // Button to fetch current weather
             ElevatedButton(
               onPressed: () {
                 setState(() {
                   cityName = _cityController.text;
 
-                  // Simulate weather data
+                  // Simulate current weather data
                   temperature =
                       '${(15 + (30 - 15) * (DateTime.now().microsecondsSinceEpoch % 100) / 100).toStringAsFixed(0)}°C'; // Simulated temp
                   weatherCondition = ['Sunny', 'Cloudy', 'Rainy'][
@@ -63,11 +68,64 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
               },
               child: Text('Fetch Weather'),
             ),
-            // Display the weather information
+            // Display the current weather information
             SizedBox(height: 20), // Added spacing for clarity
             Text('City: $cityName', style: TextStyle(fontSize: 18)),
             Text('Temperature: $temperature', style: TextStyle(fontSize: 18)),
             Text('Weather: $weatherCondition', style: TextStyle(fontSize: 18)),
+
+            // Button to fetch 7-day forecast
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  // Simulate the 7-day weather forecast data
+                  forecastDays = [
+                    'Mon',
+                    'Tue',
+                    'Wed',
+                    'Thu',
+                    'Fri',
+                    'Sat',
+                    'Sun'
+                  ];
+                  forecastTemps = [
+                    '25°C',
+                    '26°C',
+                    '27°C',
+                    '24°C',
+                    '22°C',
+                    '21°C',
+                    '23°C'
+                  ];
+                  forecastConditions = [
+                    'Sunny',
+                    'Cloudy',
+                    'Rainy',
+                    'Sunny',
+                    'Cloudy',
+                    'Rainy',
+                    'Sunny'
+                  ];
+                });
+              },
+              child: Text('Fetch 7-Day Forecast'),
+            ),
+
+            // Display the 7-day weather forecast
+            SizedBox(height: 20),
+            Text('7-Day Forecast:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            SizedBox(height: 10),
+            ...List.generate(
+              forecastDays.length,
+              (index) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: Text(
+                  '${forecastDays[index]}: ${forecastTemps[index]}, ${forecastConditions[index]}',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
           ],
         ),
       ),
