@@ -30,7 +30,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   String _weatherCondition = '';
 
   void _fetchWeather() {
-    // Simulate fetching weather data
+  
     setState(() {
       _cityName = _cityController.text;
       _temperature = (15 + (15 * Random().nextDouble())).toStringAsFixed(1) + '°C';
