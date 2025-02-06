@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:math'; 
+import 'dart:math';
 
 void main() {
   runApp(WeatherApp());
@@ -60,6 +60,10 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
               onPressed: _fetchWeather,
               child: Text('Fetch Weather'),
             ),
+            SizedBox(height: 20),
+            Text('City: $_cityName'),
+            Text('Temperature: $_temperature'),
+            Text('Condition: $_weatherCondition'),
           ],
         ),
       ),
